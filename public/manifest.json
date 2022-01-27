@@ -1,6 +1,12 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Position Sizer",
+  "name": "Stock position sizer",
+  "browser_action": {
+    "default_popup": "index.html"
+  },
+  "permissions": [
+    "storage"
+  ],
   "icons": [
     {
       "src": "favicon.ico",
