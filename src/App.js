@@ -1,15 +1,6 @@
 import React from 'react';
 import DataForm from './DataForm';
-import {
-    Container,
-    createTheme,
-    CssBaseline,
-    Divider,
-    Grid,
-    ThemeProvider,
-    Typography,
-    useMediaQuery
-} from "@mui/material";
+import {createTheme, CssBaseline, Divider, Grid, ThemeProvider, Typography, useMediaQuery} from "@mui/material";
 
 function App() {
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -32,7 +23,7 @@ function App() {
                     <br/>
                     <Divider/>
                     <Typography variant={"body2"} align={"center"}>Made with &#10084;&#65039; by <a
-                        href={"https://www.linkedin.com/in/abhishek-kaushal-nitj/"} target={"_blank"}>Kaushal,
+                        href={"https://www.linkedin.com/in/abhishek-kaushal-nitj/"} target={"_blank"} rel={"noreferrer"}>Kaushal,
                         Abhishek</a></Typography>
                 </Grid>
             </CssBaseline>
