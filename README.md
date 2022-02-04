@@ -1,6 +1,6 @@
 # Position Size Calculator
 
-Chrome extension used to determine the capitalat risk and position size based the entry price and stop loss.
+Chrome extension used to determine the capital at risk and position size based the entry price and stop loss.
 
 
 ### Steps to run
