@@ -10,20 +10,20 @@
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
-    "electron": "^17.0.0",
-    "eslint": "^8.7.0",
+    "eslint-plugin-flowtype": "^2.50.1",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.28.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "^3.0.1",
     "web-vitals": "^2.1.4"
   },
-  "main": "electron-starter.js",
   "scripts": {
-    "start": "npm start",
+    "start": "react-scripts start",
     "build": "npm run build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "electron": "electron ."
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -42,5 +42,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint-plugin-react-hooks": "^4.3.0"
   }
 }

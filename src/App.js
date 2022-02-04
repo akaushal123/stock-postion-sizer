@@ -22,7 +22,7 @@ function App() {
                     <DataForm/>
                     <br/>
                     <Divider/>
-                    <Typography variant={"body2"} align={"center"}>Made with &#10084;&#65039; by <a
+                    <Typography variant={"body2"} align={"center"}>Made with <span role={"img"} aria-label={"heart"}>&#10084;&#65039;</span> by <a
                         href={"https://www.linkedin.com/in/abhishek-kaushal-nitj/"} target={"_blank"} rel={"noreferrer"}>Kaushal,
                         Abhishek</a></Typography>
                 </Grid>
