@@ -1,6 +1,7 @@
 import React from 'react';
 import DataForm from './DataForm';
 import {createTheme, CssBaseline, Divider, Grid, ThemeProvider, Typography, useMediaQuery} from "@mui/material";
+import MenuBar from "./MenuBar";
 
 function App() {
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -10,7 +11,7 @@ function App() {
             createTheme({
                 palette: {
                     mode: prefersDarkMode ? 'dark' : 'light',
-                },
+                }
             }),
         [prefersDarkMode],
     );
@@ -18,12 +19,14 @@ function App() {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline>
-                <Grid align="center" style={{width: "350px"}}>
+                <MenuBar/>
+                <Grid align="center" style={{width: "280px"}}>
                     <DataForm/>
-                    <br/>
                     <Divider/>
-                    <Typography variant={"body2"} align={"center"}>Made with <span role={"img"} aria-label={"heart"}>&#10084;&#65039;</span> by <a
-                        href={"https://www.linkedin.com/in/abhishek-kaushal-nitj/"} target={"_blank"} rel={"noreferrer"}>Kaushal,
+                    <Typography padding={"auto"} variant={"body2"} align={"center"}>Made with <span role={"img"}
+                                                                                                    aria-label={"heart"}>&#10084;&#65039;</span> by <a
+                        href={"https://www.linkedin.com/in/abhishek-kaushal-nitj/"} target={"_blank"}
+                        rel={"noreferrer"}>Kaushal,
                         Abhishek</a></Typography>
                 </Grid>
             </CssBaseline>

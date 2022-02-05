@@ -1,17 +1,18 @@
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
-import {Box, Divider, Grid, InputAdornment, Typography} from "@mui/material";
+import {Box, Button, Divider, Grid, InputAdornment, Typography} from "@mui/material";
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default class DataForm extends React.Component {
     state = {
         capital: this.getLocalValue('capital'),
         riskPercent: this.getLocalValue('riskPercent'),
         riskPrice: 0,
-        entryPrice: 0,
+        entryPrice: '',
         positionSize: 0,
-        stopLoss: 0
+        stopLoss: ''
     }
 
     componentDidMount() {
@@ -27,12 +28,12 @@ export default class DataForm extends React.Component {
     }
 
     calculatePositionSize() {
-        let stockPoint = Math.abs(parseInt(this.state.entryPrice) - parseInt(this.state.stopLoss));
-        if (parseInt(stockPoint) === 0){
+        let stockPoint = Math.abs(parseFloat(this.state.entryPrice) - parseFloat(this.state.stopLoss));
+        if (stockPoint === 0) {
             this.setState({positionSize: 0});
             return;
         }
-        let positionSize = Math.floor(this.state.riskPrice/stockPoint);
+        let positionSize = Math.floor(this.state.riskPrice / stockPoint);
         this.setState({positionSize});
     }
 
@@ -52,7 +53,7 @@ export default class DataForm extends React.Component {
 
     calculatePrice() {
         this.setState({
-            riskPrice: (this.state.capital * this.state.riskPercent) / 100
+            riskPrice: (parseInt(this.state.capital) * parseFloat(this.state.riskPercent)) / 100
         })
     }
 
@@ -62,7 +63,7 @@ export default class DataForm extends React.Component {
                   direction="row"
                   justifyContent="space-around"
                   alignItems="center"
-                  style={{width: "350px"}}>
+                  style={{width: "280px"}}>
                 <Box padding={"10px"}>
                     <Typography variant={"h5"} align={"center"}>Stock Position Sizer</Typography>
                     <br/>
@@ -74,9 +75,11 @@ export default class DataForm extends React.Component {
                         id={"entryPrice"}
                         onChange={this.handleChange.bind(this)}
                         size={"small"}
-                        defaultValue={this.state.entryPrice}
+                        type={"number"}
+                        value={this.state.entryPrice}
                         InputProps={{
-                            startAdornment: <InputAdornment position="start"><CurrencyRupeeIcon fontSize={"small"}/></InputAdornment>,
+                            startAdornment: <InputAdornment position="start"><CurrencyRupeeIcon
+                                fontSize={"small"}/></InputAdornment>,
                         }}
                     />
                     <br/>
@@ -88,9 +91,10 @@ export default class DataForm extends React.Component {
                         id={"stopLoss"}
                         onChange={this.handleChange.bind(this)}
                         size={"small"}
-                        defaultValue={this.state.stopLoss}
+                        value={this.state.stopLoss}
                         InputProps={{
-                            startAdornment: <InputAdornment position="start"><CurrencyRupeeIcon fontSize={"small"}/></InputAdornment>,
+                            startAdornment: <InputAdornment position="start"><CurrencyRupeeIcon
+                                fontSize={"small"}/></InputAdornment>,
                         }}
                     />
                     <br/>
@@ -99,10 +103,11 @@ export default class DataForm extends React.Component {
                         style={{width: "250px"}}
                         label='Total Capital'
                         id="capital"
-                        defaultValue={this.state.capital}
+                        value={this.state.capital}
                         size={"small"}
                         InputProps={{
-                            startAdornment: <InputAdornment position="start"><CurrencyRupeeIcon fontSize={"small"}/></InputAdornment>,
+                            startAdornment: <InputAdornment position="start"><CurrencyRupeeIcon
+                                fontSize={"small"}/></InputAdornment>,
                         }}
                         onChange={this.handleChange.bind(this)}
                     />
@@ -112,24 +117,49 @@ export default class DataForm extends React.Component {
                         style={{width: "250px"}}
                         label="Risk"
                         id={"riskPercent"}
-                        defaultValue={this.state.riskPercent}
+                        value={this.state.riskPercent}
                         onChange={this.handleChange.bind(this)}
                         size={"small"}
                         InputProps={{
-                            startAdornment: <InputAdornment position="start"><ErrorOutlineIcon fontSize={"small"}/></InputAdornment>,
+                            startAdornment: <InputAdornment position="start"><ErrorOutlineIcon
+                                fontSize={"small"}/></InputAdornment>,
                             endAdornment: <InputAdornment position="start">%</InputAdornment>,
                         }}
                     />
                     <br/>
                     <br/>
                     <Divider/>
-                    <br/>
-                    <Typography>
-                        {`Capital at risk: ${this.state.riskPrice}`}
-                    </Typography >
-                    <Typography>
-                        {`Position size: ${this.state.positionSize}`}
-                    </Typography >
+                    <Typography align={"left"} noWrap padding={1}>
+                        Capital at risk: {this.state.riskPrice || 0}<br/>
+                        Position size: {this.state.positionSize || 0}
+                    </Typography>
+                    <Divider/>
+                    <Grid container direction={"row"}  justifyContent={"space-between"}>
+                        <Grid item padding={1}>
+                            <Button startIcon={<DeleteIcon fontSize={"small"}/>} variant="outlined" size={"small"}
+                                    color={"warning"} fullWidth={true}
+                                    onClick={() => this.setState({
+                                        entryPrice: '', stopLoss: '', positionSize: 0
+                                    })}>
+                                Entry-SL
+                            </Button>
+                        </Grid>
+                        <Divider orientation={"vertical"} flexItem/>
+                        <Grid item padding={1}>
+                            <Button startIcon={<DeleteIcon fontSize={"small"}/>} variant="outlined" size={"small"}
+                                    color={"error"} fullWidth
+                                    onClick={() => this.setState({
+                                        capital: '',
+                                        riskPercent: '',
+                                        riskPrice: 0,
+                                        entryPrice: '',
+                                        stopLoss: '',
+                                        positionSize: 0
+                                    })}>
+                                Cap & Risk
+                            </Button>
+                        </Grid>
+                    </Grid>
                 </Box>
             </Grid>
         )

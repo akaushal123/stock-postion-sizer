@@ -2,6 +2,8 @@
   "name": "stock-postion-sizer",
   "version": "0.1.0",
   "private": true,
+  "main": "src/Electron/main.js",
+  "homepage": "./",
   "dependencies": {
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
@@ -10,6 +12,10 @@
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
+    "concurrently": "^7.0.0",
+    "custom-electron-titlebar": "^4.0.1",
+    "electron-builder": "^22.14.5",
+    "electron-is-dev": "^2.0.0",
     "eslint-plugin-flowtype": "^2.50.1",
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jsx-a11y": "^6.5.1",
@@ -17,13 +23,17 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "^3.0.1",
+    "wait-on": "^6.0.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "dev": "concurrently \"npm start\" \"wait-on http://localhost:3000 && electron .\"",
     "start": "react-scripts start",
     "build": "npm run build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "electron": "electron .",
+    "ebuild": "npm run build && node_modules/.bin/build"
   },
   "eslintConfig": {
     "extends": [
@@ -44,6 +54,7 @@
     ]
   },
   "devDependencies": {
+    "electron": "^17.0.0",
     "eslint-plugin-react-hooks": "^4.3.0"
   }
 }
