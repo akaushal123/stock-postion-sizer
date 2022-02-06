@@ -13,14 +13,13 @@ Desktop App to determine the capital at risk and position size based the entry p
 Development server
 `npm run dev`
 
-Production build `npm `
+Production build `npm run build`
 
 After these commands, build folder will be created in the directory.
 
-- Go to [**chrome://extensions/**](chrome://extensions)
-- Toggle Developer mode
-- Click on `Load unpacked`
-- Browse to `build` folder and select it.
-- Voila! :tada: :confetti_ball: Extension added with name _**Stock Position Sizer**_
+- In `stock-position-sizer` a folder name `dist` will be created.
+- In the `dist` there will be a File called `Stock Position Sizer setup 0.1.0.exe`
+- Run the setup
+- Voila! :tada: :confetti_ball: _**Stock Position Sizer**_ app is installed.
 
-![img.png](img.png)
+![img_app.png](img_app.png)

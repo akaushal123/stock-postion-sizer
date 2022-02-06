@@ -1,9 +1,41 @@
 {
   "name": "stock-postion-sizer",
+  "description": "Desktop App for stock position sizing",
   "version": "0.1.0",
   "private": true,
-  "main": "src/Electron/main.js",
+  "main": "public/electron.js",
   "homepage": "./",
+  "author": {
+    "name": "Kaushal, Abhishek",
+    "email": "abhi.kaushal0201@gmail.com",
+    "url": "https://www.linkedin.com/in/abhishek-kaushal-nitj/"
+  },
+  "build": {
+    "appId": "com.stock.positionsizer",
+    "productName": "Stock Position Sizer",
+    "publish": [{
+      "provider": "github",
+      "owner": "Kaushal, Abhishek",
+      "repo": "stock-postion-sizer"
+    }],
+    "win": {
+      "icon": "build/icon.png",
+      "publish": [
+        "github"
+      ]
+    },
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/akaushal123/stock-postion-sizer.git"
+  },
   "dependencies": {
     "@electron/remote": "^2.0.4",
     "@emotion/react": "^11.7.1",
@@ -15,7 +47,6 @@
     "@testing-library/user-event": "^13.5.0",
     "concurrently": "^7.0.0",
     "custom-electron-titlebar": "^4.0.1",
-    "electron-builder": "^22.14.5",
     "electron-is-dev": "^2.0.0",
     "eslint-plugin-flowtype": "^2.50.1",
     "eslint-plugin-import": "^2.25.4",
@@ -28,14 +59,15 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "dev": "concurrently \"npm start\" \"wait-on http://localhost:3000 && electron .\"",
-    "start": "react-scripts start",
-    "build": "npm run build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "electron": "electron .",
-    "ebuild": "npm run build && node_modules/.bin/build"
+    "dev": "concurrently \"npm run react-start\" \"wait-on http://localhost:3000 && electron .\"",
+    "react-start": "react-scripts start",
+    "react-build": "react-scripts build",
+    "react-test": "react-scripts test",
+    "react-eject": "react-scripts eject",
+    "release": "npm run react-build && electron-builder --publish=always",
+    "build": "npm run react-build && electron-builder"
   },
+  "postinstall": "electron-builder install-app-deps",
   "eslintConfig": {
     "extends": [
       "react-app",

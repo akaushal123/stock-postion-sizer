@@ -19,7 +19,7 @@ function createWindow() {
         window = new BrowserWindow({
             title: 'Stock Position Sizer',
             alwaysOnTop: true,
-            icon: `${path.join(__dirname, '../../public/favicon.ico')}`,
+            icon: `${path.join(__dirname, './favicon.ico')}`,
             x: width - 300,
             y: height - 560,
             width: 280,
@@ -44,11 +44,15 @@ function createWindow() {
     require("@electron/remote/main").enable(window.webContents);
 
     // and load the index.html of the app.
-    const startUrl = isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`;
+    let startUrl;
+    if (isDev) {
+        startUrl = 'http://localhost:3000';
+        // Open the DevTools.
+        window.webContents.openDevTools({mode: 'detach', activate: false});
+    } else {
+        startUrl = `file://${path.join(__dirname, '../build/index.html')}`;
+    }
     window.loadURL(startUrl);
-
-    // Open the DevTools.
-    window.webContents.openDevTools({mode: 'detach', activate: false});
 
     // Emitted when the window is closed.
     window.on('closed', () => {
