@@ -5,7 +5,6 @@ import MenuBar from "./MenuBar";
 
 function App() {
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-
     const theme = React.useMemo(
         () =>
             createTheme({
@@ -19,7 +18,7 @@ function App() {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline>
-                <MenuBar/>
+                <MenuBar />
                 <Grid align="center" style={{width: "280px"}}>
                     <DataForm/>
                     <Divider/>

@@ -1,6 +1,5 @@
 const electron = require('electron');
 const isDev = require('electron-is-dev');
-
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.
@@ -10,35 +9,39 @@ const path = require('path');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let window, onTop = true;
+let window;
 
 function createWindow() {
     // Create the browser window.
     let display = electron.screen.getPrimaryDisplay();
     let {width, height} = display.bounds;
-
-    window = new BrowserWindow({
-        title: 'Stock Position Sizer',
-        type: 'toolbar',
-        alwaysOnTop: onTop,
-        icon: `${path.join(__dirname, '../../public/favicon.ico')}`,
-        x: width - 320,
-        y: height - 540,
-        width: 300,
-        height: 555,
-        roundedCorners: true,
-        resizable: false,
-        transparent: true,
-        // frame: false,
-        webPreferences: {
-            nodeIntegration: true,
-            contextIsolation: false,
-            preload: __dirname + './preload.js'
-        }
-    });
+    try{
+        window = new BrowserWindow({
+            title: 'Stock Position Sizer',
+            alwaysOnTop: true,
+            icon: `${path.join(__dirname, '../../public/favicon.ico')}`,
+            x: width - 300,
+            y: height - 560,
+            width: 280,
+            height: 500,
+            roundedCorners: true,
+            resizable: false,
+            transparent: true,
+            frame: false,
+            webPreferences: {
+                nodeIntegration: true,
+                contextIsolation: false,
+            }
+        });
+    } catch (e) {
+        console.error(e);
+    }
 
     window.setMenuBarVisibility(false);
     window.setOpacity(45);
+
+    require('@electron/remote/main').initialize();
+    require("@electron/remote/main").enable(window.webContents);
 
     // and load the index.html of the app.
     const startUrl = isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`;

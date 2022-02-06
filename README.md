@@ -10,7 +10,10 @@ Desktop App to determine the capital at risk and position size based the entry p
 
 `npm install`
 
-`npm run build`
+Development server
+`npm run dev`
+
+Production build `npm `
 
 After these commands, build folder will be created in the directory.
 

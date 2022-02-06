@@ -1,0 +1,8 @@
+.titleBar {
+    -webkit-user-select: none;
+    -webkit-app-region: drag;
+}
+body {
+    border-radius: 25px;
+    overflow: hidden;
+}
