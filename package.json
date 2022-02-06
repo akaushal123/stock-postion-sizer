@@ -65,9 +65,9 @@
     "react-test": "react-scripts test",
     "react-eject": "react-scripts eject",
     "release": "npm run react-build && electron-builder --publish=always",
-    "build": "npm run react-build && electron-builder"
+    "build": "npm run react-build && electron-builder",
+    "postinstall": "electron-builder install-app-deps"
   },
-  "postinstall": "electron-builder install-app-deps",
   "eslintConfig": {
     "extends": [
       "react-app",
