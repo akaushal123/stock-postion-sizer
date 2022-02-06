@@ -2,6 +2,10 @@
 
 Desktop App to determine the capital at risk and position size based the entry price and stop loss.
 
+**Entry Price**: Price at which trade executed<br/>
+**StopLoss**: Stop loss of the trade<br/>
+**Total Capital**: Total amount of capital deployed<br/>
+**Risk**: Total amount risked in %<br/>
 ### Steps to run
 
 `git clone https://github.com/akaushal123/stock-postion-sizer.git`
