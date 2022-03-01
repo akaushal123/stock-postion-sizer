@@ -63,7 +63,8 @@ function createWindow() {
     });
 
     window.once('ready-to-show', () => {
-        autoUpdater.checkForUpdatesAndNotify();
+        console.log('Checking for update');
+        autoUpdater.checkForUpdates();
     });
 }
 
@@ -94,13 +95,20 @@ app.on('activate', () => {
 electron.ipcMain.on('app-version', (event) => {
     event.sender.send('app-version', { version: app.getVersion() });
 });
+
+electron.ipcMain.on('download-update', () => {
+    autoUpdater.downloadUpdate();
+});
+
 electron.ipcMain.on('restart-app', () => {
     autoUpdater.quitAndInstall();
 });
 
 autoUpdater.on('update-available', () => {
-    mainWindow.webContents.send('update-available');
+    console.log('Available');
+    window.webContents.send('update-available');
 });
-autoUpdater.on('update-downloaded', () => {
-    mainWindow.webContents.send('update-downloaded');
+autoUpdater.on('update-downloaded', async () => {
+    console.log('Downloaded');
+    window.webContents.send('update-downloaded');
 });

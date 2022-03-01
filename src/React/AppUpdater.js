@@ -12,77 +12,59 @@ const { ipcRenderer } = window.require('electron');
 export default class AppUpdater extends React.Component {
 
     state = {
-        open: true,
+        updateDialogOpen: true,
+        message: 'Update Downloaded. It will be installed on restart. Restart now?'
     }
 
     componentDidMount() {
-        const notification = document.getElementById('notification');
-        const message = document.getElementById('message');
-        const restartButton = document.getElementById('restart-button');
         ipcRenderer.on('update-available', () => {
             ipcRenderer.removeAllListeners('update-available');
-            message.innerText = 'A new update is available. Downloading now...';
-            notification.classList.remove('hidden');
-          });
-          ipcRenderer.on('update-downloaded', () => {
-            ipcRenderer.removeAllListeners('update_downloaded');
-            message.innerText = 'Update Downloaded. It will be installed on restart. Restart now?';
-            restartButton.classList.remove('hidden');
-            notification.classList.remove('hidden');
-          });
+            this.setState({ updateDialogOpen: true });
+        });
     }
 
     handleClose = () =>{
-        console.log('ignore');
-        this.setState({open: !this.state.open})
+        this.setState({updateDialogOpen: !this.state.updateDialogOpen})
     }
 
-    restartApp() {
-        console.log('Restart');
+    updateApp() {
+        console.log('Update App');
+        ipcRenderer.on('download-update', () => {
+          ipcRenderer.removeAllListeners('download-update');
+        });
+        this.setState({updateDialogOpen: !this.state.updateDialogOpen});
+        ipcRenderer.on('update-downloaded', () => {
+          ipcRenderer.removeAllListeners('update-downloaded');
+        });
         ipcRenderer.send('restart-app');
     }
 
     render() {
         return (
-<div id="notification" class="hidden">
-  <p id="message"></p>
-  <button id="close-button" onClick="closeNotification()">
-    Close
-  </button>
-  <button id="restart-button" onClick="restartApp()" class="hidden">
-    Restart
-  </button>
-</div>
-
-
-    //         <div id="notification" className="hidden">
-                
-    //     <Button variant="outlined" onClick={this.handleClose}>
-    //     Open alert dialog
-    //   </Button>
-    //             <Dialog
-    //                 open={this.state.open}
-    //                 aria-labelledby="alert-dialog-title"
-    //                 aria-describedby="alert-dialog-description"
-    //             >
-    //                 <DialogTitle id="alert-dialog-title">
-    //                     {"Update available"}
-    //                 </DialogTitle>
-    //                 <DialogContent>
-    //                     <DialogContentText id="alert-dialog-description">
-    //                         Newer version of app is availble.
-    //                     </DialogContentText>
-    //                 </DialogContent>
-    //                 <DialogActions>
-    //                     <Button id="close-button" color={"error"} fullWidth onClick={this.handleClose}>
-    //                         Ignore
-    //                     </Button>
-    //                     <Button id="restart-button" color={"success"} fullWidth onClick={this.restartApp} className="hidden">
-    //                         Update
-    //                     </Button>
-    //                 </DialogActions>
-    //             </Dialog>
-    //         </div>
+            <div id="notification" className="hidden">
+                <Dialog
+                    open={this.state.updateDialogOpen}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">
+                        {"Update available"}
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            Newer version of app is availble.25
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button id="close-button" color={"error"} fullWidth onClick={this.handleClose}>
+                            Ignore
+                        </Button>
+                        <Button id="restart-button" color={"success"} fullWidth onClick={this.updateApp} className="hidden">
+                            Update
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            </div>
         )
     }
 }
