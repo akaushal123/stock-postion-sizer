@@ -1,7 +1,7 @@
 {
   "name": "stock-postion-sizer",
   "description": "Desktop App for stock position sizing",
-  "version": "0.1.0",
+  "version": "0.1.5",
   "private": true,
   "main": "public/electron.js",
   "homepage": "./",
