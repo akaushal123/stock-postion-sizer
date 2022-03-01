@@ -60,12 +60,12 @@ function createWindow() {
         // in an array if your app supports multi windows, this is the time
         // when you should delete the corresponding element.
         window = null
-    })
-}
+    });
 
-window.once('ready-to-show', () => {
-    autoUpdater.checkForUpdatesAndNotify();
-});
+    window.once('ready-to-show', () => {
+        autoUpdater.checkForUpdatesAndNotify();
+    });
+}
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -94,13 +94,13 @@ app.on('activate', () => {
 electron.ipcMain.on('app-version', (event) => {
     event.sender.send('app-version', { version: app.getVersion() });
 });
-ipcMain.on('restart-app', () => {
+electron.ipcMain.on('restart-app', () => {
     autoUpdater.quitAndInstall();
 });
 
 autoUpdater.on('update-available', () => {
     mainWindow.webContents.send('update-available');
-  });
+});
 autoUpdater.on('update-downloaded', () => {
-mainWindow.webContents.send('update-downloaded');
+    mainWindow.webContents.send('update-downloaded');
 });

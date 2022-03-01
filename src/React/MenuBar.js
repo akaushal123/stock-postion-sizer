@@ -9,6 +9,7 @@ import PushPinIcon from '@mui/icons-material/PushPin';
 import logo from './favicon.ico';
 import {createSvgIcon, Icon} from "@mui/material";
 
+const { ipcRenderer } = window.require('electron');
 const BrowserWindow = window.require('@electron/remote').BrowserWindow;
 
 const UnpinIcon = createSvgIcon(
@@ -29,7 +30,12 @@ const UnpinIcon = createSvgIcon(
 export default class MenuBar extends React.Component {
 
     state = {
-        onTop: true
+        onTop: true,
+        version: ''
+    }
+
+    componentDidMount() {
+        this.getVersion();
     }
 
     handlePin = e => {
@@ -51,6 +57,14 @@ export default class MenuBar extends React.Component {
         window.close();
     }
 
+    getVersion() {
+        ipcRenderer.send('app-version');
+        ipcRenderer.on('app-version', (event, arg) => {
+            ipcRenderer.removeAllListeners('app-version');
+            this.setState({ version: arg.version });
+        });
+    }
+
     render() {
         return (
             <AppBar position="static" style={{height: '28px', width: '100vw'}}>
@@ -60,9 +74,14 @@ export default class MenuBar extends React.Component {
                             <Grid item style={{paddingBottom: '6px'}}>
                                 <Icon>{<img src={logo} alt={"logo"} style={{height: '18px'}}/>}</Icon>
                             </Grid>
-                            <Grid item style={{paddingBottom: '4px'}}>
+                            <Grid item style={{paddingBottom: '4px'}} >
                                 <Typography style={{fontSize: '12px', paddingBottom: '4px'}}>
                                     Stock Position Sizer
+                                </Typography>
+                            </Grid>
+                            <Grid item style={{paddingBottom: '4px', paddingLeft:'5px'}}>
+                            <Typography style={{fontSize: '12px', paddingBottom: '4px', color: "#696969"}}>
+                                    v{this.state.version}
                                 </Typography>
                             </Grid>
                         </Grid>

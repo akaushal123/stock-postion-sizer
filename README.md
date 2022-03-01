@@ -27,3 +27,5 @@ After these commands, build folder will be created in the directory.
 - Voila! :tada: :confetti_ball: _**Stock Position Sizer**_ app is installed.
 
 ![img_app.png](img_app.png)
+
+Logo from [freepik](https://www.freepik.com/)
