@@ -2,6 +2,7 @@ import React from 'react';
 import DataForm from './DataForm';
 import {createTheme, CssBaseline, Divider, Grid, ThemeProvider, Typography, useMediaQuery} from "@mui/material";
 import MenuBar from "./MenuBar";
+import AppUpdater from "./AppUpdater";
 
 function App() {
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -19,6 +20,7 @@ function App() {
         <ThemeProvider theme={theme}>
             <CssBaseline>
                 <MenuBar />
+                <AppUpdater />
                 <Grid align="center" style={{width: "280px"}}>
                     <DataForm/>
                     <Divider/>

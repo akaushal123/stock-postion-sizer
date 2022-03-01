@@ -4,6 +4,7 @@ import {Box, Button, Divider, Grid, InputAdornment, Typography} from "@mui/mater
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import DeleteIcon from '@mui/icons-material/Delete';
+const { ipcRenderer } = window.require('electron');
 
 export default class DataForm extends React.Component {
     state = {
@@ -12,11 +13,21 @@ export default class DataForm extends React.Component {
         riskPrice: 0,
         entryPrice: '',
         positionSize: 0,
-        stopLoss: ''
+        stopLoss: '',
+        version: ''
     }
 
     componentDidMount() {
         this.calculatePrice();
+        this.getVersion();
+    }
+
+    getVersion() {
+        ipcRenderer.send('app-version');
+        ipcRenderer.on('app-version', (event, arg) => {
+            ipcRenderer.removeAllListeners('app-version');
+            this.setState({ version: arg.version });
+        });
     }
 
     getLocalValue(key) {
@@ -66,6 +77,7 @@ export default class DataForm extends React.Component {
                   style={{width: "280px"}}>
                 <Box padding={"10px"}>
                     <Typography variant={"h5"} align={"center"}>Stock Position Sizer</Typography>
+                    <Typography variant={"body"} align={"center"}>version {this.state.version}</Typography>
                     <br/>
                 </Box>
                 <Box inverted alignitems={"center"}>

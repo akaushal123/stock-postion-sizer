@@ -4,7 +4,7 @@ const isDev = require('electron-is-dev');
 const app = electron.app;
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
-
+const { autoUpdater } = require('electron-updater');
 const path = require('path');
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -63,6 +63,10 @@ function createWindow() {
     })
 }
 
+window.once('ready-to-show', () => {
+    autoUpdater.checkForUpdatesAndNotify();
+});
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
@@ -85,4 +89,18 @@ app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
         createWindow()
     }
+});
+
+electron.ipcMain.on('app-version', (event) => {
+    event.sender.send('app-version', { version: app.getVersion() });
+});
+ipcMain.on('restart-app', () => {
+    autoUpdater.quitAndInstall();
+});
+
+autoUpdater.on('update-available', () => {
+    mainWindow.webContents.send('update-available');
+  });
+autoUpdater.on('update-downloaded', () => {
+mainWindow.webContents.send('update-downloaded');
 });
