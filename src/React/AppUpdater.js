@@ -12,8 +12,11 @@ const { ipcRenderer } = window.require('electron');
 export default class AppUpdater extends React.Component {
 
     state = {
-        updateDialogOpen: true,
-        message: 'Update Downloaded. It will be installed on restart. Restart now?'
+        updateDialogOpen: false,
+        title: "Update available",
+        message: 'Newer version of app is available. Download now?',
+        updateActionMenu: true,
+        restartActionMenu: false
     }
 
     componentDidMount() {
@@ -27,16 +30,33 @@ export default class AppUpdater extends React.Component {
         this.setState({updateDialogOpen: !this.state.updateDialogOpen})
     }
 
-    updateApp() {
+    updateDownload() {
         console.log('Update App');
         ipcRenderer.on('download-update', () => {
           ipcRenderer.removeAllListeners('download-update');
+        }, () => {
+          this.setState({
+            updateDialogOpen: true,
+            message: 'Downloading update...',
+  
+          })
         });
-        this.setState({updateDialogOpen: !this.state.updateDialogOpen});
-        ipcRenderer.on('update-downloaded', () => {
-          ipcRenderer.removeAllListeners('update-downloaded');
-        });
-        ipcRenderer.send('restart-app');
+    }
+
+    updateInstall() {
+      ipcRenderer.on('update-downloaded', () => {
+        ipcRenderer.removeAllListeners('update-downloaded');
+      }, () => {
+        this.setState({
+          updateDialogOpen: true,
+          message: 'Update Downloaded. It will be installed on restart. Restart now?',
+          title: "Restart application"
+        })
+      });
+    }
+
+    restartApp() {
+      ipcRenderer.send('restart-app');
     }
 
     render() {
@@ -48,18 +68,18 @@ export default class AppUpdater extends React.Component {
                     aria-describedby="alert-dialog-description"
                 >
                     <DialogTitle id="alert-dialog-title">
-                        {"Update available"}
+                        {this.state.title}
                     </DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
-                            Newer version of app is availble.25
+                            {this.state.message}
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
                         <Button id="close-button" color={"error"} fullWidth onClick={this.handleClose}>
                             Ignore
                         </Button>
-                        <Button id="restart-button" color={"success"} fullWidth onClick={this.updateApp} className="hidden">
+                        <Button id="restart-button" color={"success"} fullWidth onClick={this.updateDownload} className="hidden">
                             Update
                         </Button>
                     </DialogActions>

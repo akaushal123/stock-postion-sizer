@@ -90,9 +90,9 @@
   },
   "devDependencies": {
     "electron": "^17.0.0",
+    "electron-builder": "^5.5.0",
     "eslint-plugin-react-hooks": "^4.3.0",
-    "electron-builder": "^22.14.13",
-    "react-scripts": "^5.0.0",
-    "nth-check": ">=2.0.1"
+    "nth-check": ">=2.0.1",
+    "react-scripts": "^2.1.3"
   }
 }
